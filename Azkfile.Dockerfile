@@ -5,7 +5,7 @@ MAINTAINER Julio Saito <saitodisse@gmail.com>
 RUN    apt-get update                     \
     && apt-get install -y                 \
                           graphicsmagick  \
-                          phantomjs       \
+                          # phantomjs       \
                           pkgconf         \
                           libcairo2-dev   \
                           libjpeg8-dev    \

@@ -7,8 +7,8 @@ systems({
     depends: ['mongo'],
     image: {"dockerfile": "Azkfile.Dockerfile"},
     provision: [
+      "npm install nodemon phantomjs -g",
       "npm install",
-      "npm install nodemon",
       "node_modules/.bin/bower install --allow-root",
       "node_modules/.bin/grunt build:prod",
     ],
@@ -19,7 +19,7 @@ systems({
     mounts: {
       '/azk/#{manifest.dir}': sync("."),
       '/azk/#{manifest.dir}/node_modules': persistent("#{system.name}/node_modules"),
-      '/azk/#{manifest.dir}/bower_components': persistent("#{system.name}/bower_components"),
+      '/azk/#{manifest.dir}/website/public/bower_components': persistent("#{system.name}/bower_components"),
       '/azk/#{manifest.dir}/website/build': persistent("#{system.name}/website/build"),
     },
     scalable: {"default": 1},
