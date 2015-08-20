@@ -23,7 +23,10 @@ systems({
     },
     scalable: {"default": 1},
     http: {
-      domains: [ "#{system.name}.#{azk.default_domain}" ]
+      domains: [
+        "#{system.name}.#{azk.default_domain}", // default azk
+        "#{process.env.AZK_HOST_IP}"            // used if deployed
+      ]
     },
     ports: {
       http: "3000/tcp",
