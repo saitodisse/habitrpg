@@ -1,7 +1,3 @@
-/**
- * Documentation: http://docs.azk.io/Azkfile.js
- */
-// Adds the systems that shape your system
 systems({
   habitrpg: {
     depends: ['mongo'],
@@ -14,7 +10,10 @@ systems({
     ],
     workdir: "/azk/#{manifest.dir}",
     shell: "/bin/bash",
+
+    // command: "node_modules/.bin/grunt run:dev",
     command: "node_modules/.bin/grunt nodemon",
+
     wait: { retry: 30, timeout: 1000 },
     mounts: {
       '/azk/#{manifest.dir}': sync("."),
@@ -27,16 +26,23 @@ systems({
       domains: [ "#{system.name}.#{azk.default_domain}" ]
     },
     ports: {
-      // exports global variables
       http: "3000/tcp",
     },
     envs: {
-      // Make sure that the PORT value is the same as the one
-      // in ports/http below, and that it's also the same
-      // if you're setting it in a .env file
-      NODE_ENV: "dev",
-      PORT: "3000",
-      HOST: "0.0.0.0",
+      NODE_ENV        : "dev",
+      PORT            : "3000",
+      HOST            : "0.0.0.0",
+      SESSION_SECRET  : "THIS_IS_THE_SESSION_SECRET",
+      BASE_URL        : "http ://#{system.name}.#{azk.default_domain}",
+      FACEBOOK_KEY    : "123456789012345",
+      FACEBOOK_SECRET : "aaaabbbbccccddddeeeeffff00001111",
+      ADMIN_EMAIL     : "you@yours.com",
+      SMTP_USER       : "user@domain.com",
+      SMTP_PASS       : "password",
+      SMTP_SERVICE    : "Gmail",
+      SMTP_HOST       : "smtp.gmail.com",
+      SMTP_PORT       : "587",
+      SMTP_TLS        : "true",
     },
   },
 
