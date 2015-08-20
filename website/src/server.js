@@ -73,20 +73,21 @@ if (cores!==0 && cluster.isMaster && (isDev || isProd)) {
   // FIXME
   // This auth strategy is no longer used. It's just kept around for auth.js#loginFacebook() (passport._strategies.facebook.userProfile)
   // The proper fix would be to move to a general OAuth module simply to verify accessTokens
-  passport.use(new FacebookStrategy({
-    clientID: nconf.get("FACEBOOK_KEY"),
-    clientSecret: nconf.get("FACEBOOK_SECRET"),
-    //callbackURL: nconf.get("BASE_URL") + "/auth/facebook/callback"
-  },
-    function(accessToken, refreshToken, profile, done) {
-      done(null, profile);
-    }
-   ));
+  // passport.use(new FacebookStrategy({
+  //   clientID: nconf.get("FACEBOOK_KEY"),
+  //   clientSecret: nconf.get("FACEBOOK_SECRET"),
+  //   //callbackURL: nconf.get("BASE_URL") + "/auth/facebook/callback"
+  // },
+  //   function(accessToken, refreshToken, profile, done) {
+  //     done(null, profile);
+  //   }
+  //  ));
 
   // ------------  Server Configuration ------------
   var publicDir = path.join(__dirname, "/../public");
 
   app.set("port", nconf.get('PORT'));
+  app.set("host", nconf.get('HOST'));
   require('./middlewares/apiThrottle')(app);
   app.use(require('./middlewares/domain')(server,mongoose));
   if (!isProd) app.use(express.logger("dev"));
@@ -137,8 +138,8 @@ if (cores!==0 && cluster.isMaster && (isDev || isProd)) {
   app.use(require('./middlewares/errorHandler'));
 
   server.on('request', app);
-  server.listen(app.get("port"), function() {
-    return logging.info("Express server listening on port " + app.get("port"));
+  server.listen(app.get("port"), app.get("host"), function() {
+    return logging.info("Express server listening on " + app.get("host") + ":" + app.get("port"));
   });
 
   module.exports = server;

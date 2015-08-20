@@ -29,3 +29,4 @@ coverage.html
 common/dist/scripts/habitrpg-shared.js
 
 test/spec/mocks/translations.js
+/.azk
